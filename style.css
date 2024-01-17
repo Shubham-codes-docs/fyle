@@ -1,0 +1,64 @@
+body {
+  background-color: #000;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+h3 {
+  font-family: "Roboto Condensed", sans-serif;
+  color: #fff;
+  font-weight: 600;
+}
+
+.user-section {
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #e2e0e0;
+}
+
+.avatar {
+  width: 5rem;
+}
+
+.repo-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 500px));
+}
+
+.repo {
+  color: #efeded;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+.repo-desc {
+  text-align: justify;
+}
+
+.tag {
+  background-color: #151821;
+  padding: 8px 24px;
+  border-radius: 10%;
+  cursor: pointer;
+  color: #467fc8;
+}
+
+.repo-stat {
+  display: flex;
+  gap: 4px;
+}
+
+.repo-stat img {
+  max-width: 1.2rem;
+  filter: invert(52%) sepia(94%) saturate(746%) hue-rotate(353deg)
+    brightness(98%) contrast(89%);
+}
