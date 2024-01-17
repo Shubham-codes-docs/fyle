@@ -31,7 +31,7 @@ h3 {
 
 .repo-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 500px));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 500px));
 }
 
 .repo {
@@ -61,4 +61,24 @@ h3 {
   max-width: 1.2rem;
   filter: invert(52%) sepia(94%) saturate(746%) hue-rotate(353deg)
     brightness(98%) contrast(89%);
+}
+
+input[type="text"] {
+  background-image: url("./assets/icons/search.svg");
+  background-repeat: no-repeat;
+  padding: 1rem 3.5rem;
+  background-position: 10px 10px;
+}
+
+.btn-submit {
+  background-color: #ed8a19;
+  color: #fff;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #c27318;
 }

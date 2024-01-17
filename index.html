@@ -19,25 +19,41 @@
   <body>
     <div class="container">
       <h3>Popular GitHub Repositories</h3>
+      <div class="mt-5">
+        <form class="d-flex" id="user-form">
+          <input
+            class="form-control me-2"
+            type="text"
+            name="userName"
+            id="userName"
+            placeholder="Search for a user"
+            aria-label="Search"
+          />
+          <button class="btn btn-submit" type="submit">Search</button>
+        </form>
+      </div>
       <section class="user-section" id="user-section">
         <div class="user-info">
           <img
             src="./assets/images/avatar.svg"
             alt="Avatar"
             class="img-fluid rounded avatar"
+            id="user-avatar"
           />
           <div
             class="d-flex flex-column align-content-center justify-items-center"
           >
-            <p class="fs-5 fw-light lh-1 mb-n2">Shubham Tiwary</p>
-            <span class="fs-6 fw-lighter">Shubham-Codes-Docs</span>
+            <p class="fs-5 fw-light lh-1 mb-n2" id="name">Shubham Tiwary</p>
+            <span class="fs-6 fw-lighter">
+              <a href="" id="profile">Shubham-Codes-Docs</a></span
+            >
           </div>
         </div>
 
         <div id="'user-repos" class="user-repos mt-5">
           <h3>User's Public Repositories</h3>
           <div class="repo-wrapper mt-5">
-            <div class="repo px-4 py-4">
+            <article class="repo px-4 py-4">
               <div class="repo-info">
                 <h4 class="repo-name">Repo Name</h4>
                 <p class="repo-desc">
@@ -69,10 +85,11 @@
                   <span class="repo-stat-name">Watching</span>
                 </div>
               </div>
-            </div>
+            </article>
           </div>
         </div>
       </section>
     </div>
+    <script src="./index.js"></script>
   </body>
 </html>
