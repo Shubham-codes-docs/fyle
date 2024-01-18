@@ -20,6 +20,9 @@
     <div class="container">
       <h3>Popular GitHub Repositories</h3>
       <div class="mt-5">
+        <div class="alert alert-danger d-none" role="alert" id="user-alert">
+          Please enter a valid Username
+        </div>
         <form class="d-flex" id="user-form">
           <input
             class="form-control me-2"
@@ -34,7 +37,7 @@
       </div>
       <section class="user-section" id="user-section">
         <div class="user-info">
-          <div class="preloader py-5 d-none" id="loader">
+          <div class="preloader py-5 d-none" id="user-loader">
             <img
               src="./assets/icons/preLoader.gif"
               class="img-fluid"
@@ -42,27 +45,29 @@
             />
             <p class="fs-2">Loading...</p>
           </div>
-          <img
-            src="./assets/images/avatar.svg"
-            alt="Avatar"
-            class="img-fluid rounded avatar"
-            id="user-avatar"
-          />
-          <div
-            class="d-flex flex-column align-content-center justify-items-center"
-          >
-            <p class="fs-5 fw-light lh-1 mb-n2" id="user-name">
-              Shubham Tiwary
-            </p>
-            <span class="fs-6 fw-lighter">
-              <a href="" id="user-profile">Shubham-Codes-Docs</a></span
+          <div class="user-info-section">
+            <img
+              src="./assets/images/avatar.svg"
+              alt="Avatar"
+              class="img-fluid rounded avatar"
+              id="user-avatar"
+            />
+            <div
+              class="d-flex flex-column align-content-center justify-items-center"
             >
-            <div class="user-bio">
-              <p class="fs-5 fw-light lh-1 mb-n2">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Expedita quas culpa saepe natus dolorum accusantium libero
-                veritatis eius, quaerat nam?
+              <p class="fs-5 fw-light lh-1 mb-n2" id="user-name">
+                Shubham Tiwary
               </p>
+              <span class="fs-6 fw-lighter">
+                <a href="" id="user-profile">Shubham-Codes-Docs</a></span
+              >
+              <div class="user-bio">
+                <p class="fs-5 fw-light lh-1 mb-n2" id="user-bio-para">
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Expedita quas culpa saepe natus dolorum accusantium libero
+                  veritatis eius, quaerat nam?
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -79,7 +84,7 @@
               aria-label="Search"
             />
           </div>
-          <div class="preloader py-5 d-none" id="loader">
+          <div class="preloader py-5 d-none" id="repo-loader">
             <img
               src="./assets/icons/preLoader.gif"
               class="img-fluid"
@@ -87,42 +92,11 @@
             />
             <p class="fs-2">Loading...</p>
           </div>
-          <div class="repo-wrapper mt-5">
-            <article class="repo px-4 py-4">
-              <div class="repo-info">
-                <h4 class="repo-name">Repo Name</h4>
-                <p class="repo-desc">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Incidunt, ratione aliquid quas vel laboriosam sunt quod
-                  voluptatem hic ad blanditiis consectetur unde a illo culpa
-                  earum facilis quibusdam quae illum!
-                </p>
-              </div>
-              <div class="tags d-flex flex-wrap gap-2 mb-4">
-                <span class="tag">HTML</span>
-                <span class="tag">CSS</span>
-                <span class="tag">JAVASCRIPT</span>
-              </div>
-              <div class="repo-stats d-flex align-content-center gap-2">
-                <div class="repo-stat">
-                  <img src="./assets/icons/stars.svg" alt="stars" />
-                  <span class="repo-stat-value">1</span>
-                  <span class="repo-stat-name">Stars</span>
-                </div>
-                <div class="repo-stat">
-                  <img src="./assets/icons/git-fork.svg" alt="github-forks" />
-                  <span class="repo-stat-value">1</span>
-                  <span class="repo-stat-name">Forks</span>
-                </div>
-                <div class="repo-stat">
-                  <img src="./assets/icons/eye.svg" alt="watchers" />
-                  <span class="repo-stat-value">1</span>
-                  <span class="repo-stat-name">Watching</span>
-                </div>
-              </div>
-            </article>
-          </div>
+          <div class="repo-wrapper mt-5"></div>
         </div>
+        <nav class="d-flex align-content-center justify-content-center mt-5">
+          <ul class="pagination" id="pagination"></ul>
+        </nav>
       </section>
     </div>
     <script src="./index.js"></script>

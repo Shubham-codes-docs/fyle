@@ -1,8 +1,12 @@
+let globalUser = "";
+let filterString = "";
+let currentPage = 1;
+let totalPages;
+
 const getRepoLanguage = (e) => {
   console.log(e);
 };
 
-let filterString = "";
 const filterRepo = (e) => {
   if (e.data == null)
     filterString = filterString.slice(0, filterString.length - 1);
@@ -19,21 +23,16 @@ const filterRepo = (e) => {
   });
 };
 
-const getUserRepos = async (repoUrl) => {
-  const loader = document.getElementById("loader");
+const getUserRepos = async (repoUrl = globalUser) => {
+  const loader = document.getElementById("repo-loader");
   loader.classList.remove("d-none");
-  // const res = await fetch(repoUrl);
-  // const data = await res.json();
-  // console.log(data);
+  console.log(currentPage);
+  const res = await fetch(`${repoUrl}?per_page=10&page=${currentPage}`);
+  const data = await res.json();
   loader.classList.add("d-none");
   const repos = document.getElementsByClassName("repo-wrapper")[0];
   repos.innerHTML = "";
-  const data = repoUrl.forEach(async (repo) => {
-    // const tags = await fetch(
-    //   `https://api.github.com/repos/${repo.owner.login}/${repo.name}/languages`
-    // );
-    // let tagData = await tags.json();
-    // console.log(tagData);
+  data.forEach(async (repo) => {
     const article = document.createElement("article");
     article.className += " repo px-4 py-4 mb-4";
     article.innerHTML = `<div class="repo-info">
@@ -47,7 +46,6 @@ const getUserRepos = async (repoUrl) => {
     </p>
   </div>
   <div class="tags d-flex flex-wrap gap-2 mb-4">
-    <span class="tag">${repo.language}</span>
   </div>
   <div class="repo-stats d-flex align-content-center gap-2">
     <div class="repo-stat">
@@ -67,42 +65,126 @@ const getUserRepos = async (repoUrl) => {
     </div>
   </div>`;
     repos.appendChild(article);
+    const tags = document.querySelector(".tags");
+    repo.topics.length > 0 &&
+      repo.topics.forEach((topic) => {
+        const span = document.createElement("span");
+        span.classList.add("tag");
+        span.textContent = topic;
+        tags.append(topic);
+      });
   });
+};
+
+const paginateResult = (e) => {
+  page = e.target.value;
+  currentPage = page;
+  const prevLink = document.querySelector("#previousLi");
+  const nextLink = document.querySelector("#nextLi");
+  const currentLink = document.querySelector("#currentLi");
+  if (page - 1 < 1) {
+    prevLink.classList.add("d-none");
+  } else {
+    prevLink.classList.remove("d-none");
+    prevLink.value = currentPage - 1;
+  }
+
+  currentLink.textContent = currentPage;
+
+  if (currentPage + 1 > totalPages) {
+    nextLink.classList.add("d-none");
+  } else {
+    nextLink.classList.remove("d-none");
+    nextLink.value = currentPage + 1;
+  }
+
+  getUserRepos();
 };
 
 const getUserDetails = async (e) => {
   e.preventDefault();
   const userName = document.getElementById("userName").value;
   if (userName === "" || !userName) {
-    alert("Please enter a username");
+    const nameAlert = document.getElementById("user-alert");
+    nameAlert.classList.remove("d-none");
+    setTimeout(() => {
+      nameAlert.classList.add("d-none");
+    }, 5000);
     return;
   }
 
-  const loader = document.getElementById("loader");
+  const loader = document.getElementById("user-loader");
   loader.classList.remove("d-none");
+  const userInfo = document.getElementsByClassName("user-info-section")[0];
+  userInfo.classList.add("d-none");
+  currentPage = 1;
 
-  // const res = await fetch(`https://api.github.com/users/${userName}`);
-  const res = await fetch("./proxy.json");
-  const user = await res.json();
-  console.log(user);
+  const res = await fetch(`https://api.github.com/users/${userName}`);
+  const data = await res.json();
   loader.classList.add("d-none");
-  const data = user[0].user;
+  userInfo.classList.remove("d-none");
   if (!data) {
-    alert("User not found");
+    const nameAlert = document.getElementById("user-alert");
+    nameAlert.textContent = "No user with the given userName found...";
+    nameAlert.classList.remove("d-none");
+    setTimeout(() => {
+      nameAlert.classList.add("d-none");
+    }, 5000);
     return;
   }
+  globalUser = data.repos_url;
   userAvatar.src = data.avatar_url;
   fullName.textContent = data.name;
+  userBio.textContent = data.bio || "No bio Available!";
   profile.href = data.html_url;
   profile.textContent = data.login;
-  getUserRepos(user[1].repos);
+  const total_pages = Math.ceil(data.public_repos / 10);
+  totalPages = total_pages;
+  console.log(total_pages);
+
+  //generating pagination links
+  const previousLi = document.createElement("li");
+  previousLi.id = "previousLi";
+  previousLi.classList.add("page-item");
+  previousLi.classList.add("page-link");
+  currentPage - 1 < 1
+    ? previousLi.classList.add("d-none")
+    : previousLi.classList.remove("d-none");
+  previousLi.value = currentPage - 1;
+  previousLi.textContent = "<";
+  previousLi.onclick = paginateResult;
+  pagination.append(previousLi);
+
+  const currentLi = document.createElement("li");
+  currentLi.id = "currentLi";
+  currentLi.classList.add("page-item");
+  currentLi.classList.add("page-link");
+  currentLi.value = currentPage;
+  currentLi.textContent = currentPage;
+  currentLi.onclick = paginateResult;
+  pagination.append(currentLi);
+
+  const nextLi = document.createElement("li");
+  nextLi.id = "nextLi";
+  nextLi.classList.add("page-item");
+  nextLi.classList.add("page-link");
+  currentPage + 1 > total_pages
+    ? nextLi.classList.add("d-none")
+    : nextLi.classList.remove("d-none");
+  nextLi.value = currentPage + 1;
+  nextLi.textContent = ">";
+  nextLi.onclick = paginateResult;
+  pagination.append(nextLi);
+  getUserRepos(data.repos_url);
 };
 
 const userForm = document.getElementById("user-form");
+const userBio = document.getElementById("user-bio-para");
 const fullName = document.getElementById("user-name");
 const userAvatar = document.getElementById("user-avatar");
 const profile = document.getElementById("user-profile");
 const repoFilter = document.getElementById("repoFilter");
+const pagination = document.getElementById("pagination");
 
 userForm.addEventListener("submit", getUserDetails);
 repoFilter.addEventListener("input", filterRepo);
