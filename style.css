@@ -13,6 +13,11 @@ h3 {
   font-weight: 600;
 }
 
+a {
+  text-decoration: none;
+  color: #ed8a19;
+}
+
 .user-section {
   padding: 2rem;
   border-radius: 0.5rem;
@@ -25,13 +30,33 @@ h3 {
   color: #e2e0e0;
 }
 
+.user-bio {
+  max-width: 35rem;
+  text-align: justify;
+}
+
+@media (max-width: 540px) {
+  .user-info {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .user-bio {
+    text-align: center;
+    margin-top: 5px;
+  }
+}
+
 .avatar {
-  width: 5rem;
+  max-width: 15rem;
 }
 
 .repo-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 500px));
+  gap: 1.5rem;
 }
 
 .repo {
@@ -81,4 +106,31 @@ input[type="text"] {
 
 .btn:hover {
   background-color: #c27318;
+}
+
+.preloader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.preloader img {
+  max-width: 10rem;
+}
+
+/*Media queries*/
+
+@media (max-width: 560px) {
+  .repo-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .repo-name {
+    text-align: center;
+  }
 }

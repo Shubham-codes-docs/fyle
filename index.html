@@ -34,6 +34,14 @@
       </div>
       <section class="user-section" id="user-section">
         <div class="user-info">
+          <div class="preloader py-5 d-none" id="loader">
+            <img
+              src="./assets/icons/preLoader.gif"
+              class="img-fluid"
+              alt="loading..."
+            />
+            <p class="fs-2">Loading...</p>
+          </div>
           <img
             src="./assets/images/avatar.svg"
             alt="Avatar"
@@ -43,15 +51,42 @@
           <div
             class="d-flex flex-column align-content-center justify-items-center"
           >
-            <p class="fs-5 fw-light lh-1 mb-n2" id="name">Shubham Tiwary</p>
+            <p class="fs-5 fw-light lh-1 mb-n2" id="user-name">
+              Shubham Tiwary
+            </p>
             <span class="fs-6 fw-lighter">
-              <a href="" id="profile">Shubham-Codes-Docs</a></span
+              <a href="" id="user-profile">Shubham-Codes-Docs</a></span
             >
+            <div class="user-bio">
+              <p class="fs-5 fw-light lh-1 mb-n2">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Expedita quas culpa saepe natus dolorum accusantium libero
+                veritatis eius, quaerat nam?
+              </p>
+            </div>
           </div>
         </div>
 
         <div id="'user-repos" class="user-repos mt-5">
           <h3>User's Public Repositories</h3>
+          <div class="mt-5">
+            <input
+              class="form-control me-2"
+              type="text"
+              name="repoFilter"
+              id="repoFilter"
+              placeholder="Filter Repositories"
+              aria-label="Search"
+            />
+          </div>
+          <div class="preloader py-5 d-none" id="loader">
+            <img
+              src="./assets/icons/preLoader.gif"
+              class="img-fluid"
+              alt="loading..."
+            />
+            <p class="fs-2">Loading...</p>
+          </div>
           <div class="repo-wrapper mt-5">
             <article class="repo px-4 py-4">
               <div class="repo-info">
