@@ -45,7 +45,10 @@
             />
             <p class="fs-2">Loading...</p>
           </div>
-          <div class="user-info-section">
+          <p class="fs-2 welcome-text">
+            Search for the public repositories of the users you wish!!
+          </p>
+          <div class="user-info-section d-none">
             <img
               src="./assets/images/avatar.svg"
               alt="Avatar"
@@ -55,26 +58,20 @@
             <div
               class="d-flex flex-column align-content-center justify-items-center"
             >
-              <p class="fs-5 fw-light lh-1 mb-n2" id="user-name">
-                Shubham Tiwary
-              </p>
+              <p class="fs-5 fw-light lh-1 mb-n2" id="user-name"></p>
               <span class="fs-6 fw-lighter">
-                <a href="" id="user-profile">Shubham-Codes-Docs</a></span
-              >
+                <a href="" id="user-profile" target="_blank"></a
+              ></span>
               <div class="user-bio">
-                <p class="fs-5 fw-light lh-1 mb-n2" id="user-bio-para">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Expedita quas culpa saepe natus dolorum accusantium libero
-                  veritatis eius, quaerat nam?
-                </p>
+                <p class="fs-5 fw-light lh-1 mb-n2" id="user-bio-para"></p>
               </div>
             </div>
           </div>
         </div>
 
-        <div id="'user-repos" class="user-repos mt-5">
+        <div id="user-repos" class="user-repos mt-5 d-none">
           <h3>User's Public Repositories</h3>
-          <div class="mt-5">
+          <div class="mt-5 d-flex flex-wrap gap-2">
             <input
               class="form-control me-2"
               type="text"
@@ -83,6 +80,28 @@
               placeholder="Filter Repositories"
               aria-label="Search"
             />
+            <div class="d-flex">
+              <label for="items_per_page" class="items-per-page-label"
+                >Items Per Page:</label
+              >
+
+              <select
+                name="items_per_page"
+                id="items_per_page"
+                class="form-select form-select-sm"
+              >
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+                <option value="50">50</option>
+                <option value="60">60</option>
+                <option value="70">70</option>
+                <option value="80">80</option>
+                <option value="90">90</option>
+                <option value="100">100</option>
+              </select>
+            </div>
           </div>
           <div class="preloader py-5 d-none" id="repo-loader">
             <img

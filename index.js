@@ -1,10 +1,29 @@
+//global variables
 let globalUser = "";
 let filterString = "";
 let currentPage = 1;
 let totalPages;
+let items_per_page = 10;
+let totalRepos;
 
-const getRepoLanguage = (e) => {
-  console.log(e);
+//getting dom elements for manipulation
+const userForm = document.getElementById("user-form");
+const userBio = document.getElementById("user-bio-para");
+const fullName = document.getElementById("user-name");
+const userAvatar = document.getElementById("user-avatar");
+const profile = document.getElementById("user-profile");
+const repoFilter = document.getElementById("repoFilter");
+const pagination = document.getElementById("pagination");
+const itemsPerPage = document.getElementById("items_per_page");
+const welcomeText = document.getElementsByClassName("welcome-text")[0];
+const userRepos = document.getElementById("user-repos");
+
+const changeItemCount = (e) => {
+  items_per_page = e.target.value;
+  currentPage = 1;
+  totalPages = Math.ceil(totalRepos / items_per_page);
+  paginateResult();
+  getUserRepos();
 };
 
 const filterRepo = (e) => {
@@ -15,8 +34,7 @@ const filterRepo = (e) => {
   articles.forEach((a) => {
     const articleName = a.querySelector(".repo-name").textContent;
     if (!articleName.toLowerCase().includes(filterString.toLowerCase())) {
-      console.log(a);
-      a.classList.toggle("d-none");
+      a.classList.add("d-none");
     } else {
       a.classList.remove("d-none");
     }
@@ -24,10 +42,12 @@ const filterRepo = (e) => {
 };
 
 const getUserRepos = async (repoUrl = globalUser) => {
+  userRepos.classList.remove("d-none");
   const loader = document.getElementById("repo-loader");
   loader.classList.remove("d-none");
-  console.log(currentPage);
-  const res = await fetch(`${repoUrl}?per_page=10&page=${currentPage}`);
+  const res = await fetch(
+    `${repoUrl}?per_page=${items_per_page}&page=${currentPage}`
+  );
   const data = await res.json();
   loader.classList.add("d-none");
   const repos = document.getElementsByClassName("repo-wrapper")[0];
@@ -37,7 +57,7 @@ const getUserRepos = async (repoUrl = globalUser) => {
     article.className += " repo px-4 py-4 mb-4";
     article.innerHTML = `<div class="repo-info">
     <h4 class="repo-name">
-    <a href=${repo.html_url}>
+    <a href=${repo.html_url} target="_blank">
     ${repo.name}
     </a>
     </h4>
@@ -71,13 +91,15 @@ const getUserRepos = async (repoUrl = globalUser) => {
         const span = document.createElement("span");
         span.classList.add("tag");
         span.textContent = topic;
-        tags.append(topic);
+        tags.append(span);
       });
   });
 };
 
 const paginateResult = (e) => {
-  page = e.target.value;
+  filterString = "";
+  if (e) page = e.target.value;
+  else page = 1;
   currentPage = page;
   const prevLink = document.querySelector("#previousLi");
   const nextLink = document.querySelector("#nextLi");
@@ -113,11 +135,32 @@ const getUserDetails = async (e) => {
     return;
   }
 
+  //removing the previous pagination links
+  const oldPrevLink = document.querySelector("#previousLi");
+  if (oldPrevLink) {
+    const prevParent = oldPrevLink.parentNode;
+    prevParent.removeChild(oldPrevLink);
+  }
+
+  const oldCurrentLink = document.querySelector("#currentLi");
+  if (oldCurrentLink) {
+    const currParent = oldCurrentLink.parentNode;
+    currParent.removeChild(oldCurrentLink);
+  }
+
+  const oldNextLink = document.querySelector("#nextLi");
+  if (oldNextLink) {
+    const nextParent = oldNextLink.parentNode;
+    nextParent.removeChild(oldNextLink);
+  }
+
+  welcomeText.classList.add("d-none");
   const loader = document.getElementById("user-loader");
   loader.classList.remove("d-none");
   const userInfo = document.getElementsByClassName("user-info-section")[0];
   userInfo.classList.add("d-none");
   currentPage = 1;
+  filterString = "";
 
   const res = await fetch(`https://api.github.com/users/${userName}`);
   const data = await res.json();
@@ -138,9 +181,9 @@ const getUserDetails = async (e) => {
   userBio.textContent = data.bio || "No bio Available!";
   profile.href = data.html_url;
   profile.textContent = data.login;
-  const total_pages = Math.ceil(data.public_repos / 10);
+  const total_pages = Math.ceil(data.public_repos / items_per_page);
+  totalRepos = data.public_repos;
   totalPages = total_pages;
-  console.log(total_pages);
 
   //generating pagination links
   const previousLi = document.createElement("li");
@@ -178,13 +221,7 @@ const getUserDetails = async (e) => {
   getUserRepos(data.repos_url);
 };
 
-const userForm = document.getElementById("user-form");
-const userBio = document.getElementById("user-bio-para");
-const fullName = document.getElementById("user-name");
-const userAvatar = document.getElementById("user-avatar");
-const profile = document.getElementById("user-profile");
-const repoFilter = document.getElementById("repoFilter");
-const pagination = document.getElementById("pagination");
-
+//connecting event listeners
 userForm.addEventListener("submit", getUserDetails);
 repoFilter.addEventListener("input", filterRepo);
+itemsPerPage.addEventListener("change", changeItemCount);

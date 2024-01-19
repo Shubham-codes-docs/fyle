@@ -18,9 +18,18 @@ a {
   color: #ed8a19;
 }
 
+.page-item {
+  cursor: pointer;
+}
+
 .user-section {
   padding: 2rem;
   border-radius: 0.5rem;
+}
+
+.welcome-text {
+  color: #fff;
+  text-align: center;
 }
 
 .user-info-section {
@@ -33,20 +42,6 @@ a {
 .user-bio {
   max-width: 35rem;
   text-align: justify;
-}
-
-@media (max-width: 540px) {
-  .user-info-section {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .user-bio {
-    text-align: center;
-    margin-top: 5px;
-  }
 }
 
 .avatar {
@@ -95,6 +90,18 @@ input[type="text"] {
   background-position: 10px 10px;
 }
 
+#repoFilter {
+  max-width: 60rem;
+}
+
+.items-per-page-label {
+  color: #fff;
+}
+
+#items_per_page {
+  max-width: 5rem;
+}
+
 .btn-submit {
   background-color: #ed8a19;
   color: #fff;
@@ -123,6 +130,12 @@ input[type="text"] {
 /*Media queries*/
 
 @media (max-width: 560px) {
+  .user-repos {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
   .repo-info {
     display: flex;
     flex-direction: column;
@@ -132,5 +145,19 @@ input[type="text"] {
 
   .repo-name {
     text-align: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .user-info-section {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .user-bio {
+    text-align: center;
+    margin-top: 5px;
   }
 }
